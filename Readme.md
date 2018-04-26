@@ -1,7 +1,7 @@
 # Личный проект «YetiCave»
 
 * Студент: [Игорь Белов](https://up.htmlacademy.ru/php/5/user/300581).
-* Наставник: `Неизвестно`.
+* Наставник: [Алексей Стулов](https://htmlacademy.ru/profile/id25231).
 
 ---
 
