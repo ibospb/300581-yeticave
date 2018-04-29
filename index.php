@@ -42,6 +42,18 @@ $lots__list = [
         'pic' => 'img/lot-6.jpg'
     ],
 ];
+
+    // пользовательские функции
+
+function format_price ($price) {
+  if ($price>=1000) {
+    print number_format((ceil($price)),0,'.',' ')." &#8381;";
+  }
+  else {
+    print ceil($price)." &#8381;";
+  }
+}
+
 //print("<pre>");
 //print_r($lots__list);
 //print("<pre>");
@@ -136,7 +148,7 @@ $lots__list = [
                     <div class="lot__state">
                         <div class="lot__rate">
                             <span class="lot__amount">Стартовая цена</span>
-                            <span class="lot__cost"><?=$value['price']?><b class="rub">р</b></span>
+                            <span class="lot__cost"><?=format_price($value['price'])?></span>
                         </div>
                         <div class="lot__timer timer">
 
