@@ -73,11 +73,12 @@ $lots__list = [
 
 function format_price ($price) {
   if ($price>=1000) {
-    print number_format((ceil($price)),0,'.',' ')." &#8381;";
+    $price= number_format((ceil($price)),0,'.',' ');
   }
   else {
-    print ceil($price)." &#8381;";
+    $price= ceil($price);
   }
+  return $price.' <b class="rub">р</b>';
 }
 
 //print("<pre>");
