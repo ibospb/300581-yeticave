@@ -3,44 +3,70 @@ $is_auth = (bool) rand(0, 1);
 
 $user_name = 'Константин';
 $user_avatar = 'img/user.jpg';
-$categories = ["Доски и лыжи", "Крепления", "Ботинки", "Одежда", "Инструменты", "Разное"];
+//$categories = ["Доски и лыжи", "Крепления", "Ботинки", "Одежда", "Инструменты", "Разное"];
+$categories = [
+    [
+        'ru_name' => 'Доски и лыжи',
+        'eng_name' => 'boards'
+    ],
+    [
+        'ru_name' => 'Крепления',
+        'eng_name' => 'attachment'
+    ],
+    [
+        'ru_name' => 'Ботинки',
+        'eng_name' => 'boots'
+    ],
+    [
+        'ru_name' => 'Одежда',
+        'eng_name' => 'clothing'
+    ],
+    [
+        'ru_name' => 'Инструменты',
+        'eng_name' => 'tools'
+    ],
+    [
+        'ru_name' => 'Разное',
+        'eng_name' => 'other'
+    ]
+];
 $lots__list = [
     [
         'name' => '2014 Rossignol District Snowboard',
-        'category' => $categories[0],
+        'category' => $categories[0]['ru_name'],
         'price' => '10999',
         'pic' => 'img/lot-1.jpg'
     ],
     [
         'name' => 'DC Ply Mens 2016/2017 Snowboard',
-        'category' => $categories[0],
+        'category' => $categories[0]['ru_name'],
         'price' => '159999',
         'pic' => 'img/lot-2.jpg'
     ],
     [
         'name' => 'Крепления Union Contact Pro 2015 года размер L/XL',
-        'category' => $categories[1],
+        'category' => $categories[1]['ru_name'],
         'price' => '8000',
         'pic' => 'img/lot-3.jpg'
     ],
     [
         'name' => 'Ботинки для сноуборда DC Mutiny Charocal',
-        'category' => $categories[2],
+        'category' => $categories[2]['ru_name'],
         'price' => '10999',
         'pic' => 'img/lot-4.jpg'
     ],
     [
         'name' => 'Куртка для сноуборда DC Mutiny Charocal',
-        'category' => $categories[3],
+        'category' => $categories[3]['ru_name'],
         'price' => '7500',
         'pic' => 'img/lot-5.jpg'
     ],
     [
         'name' => 'Маска Oakley Canopy',
-        'category' => $categories[5],
+        'category' => $categories[5]['ru_name'],
         'price' => '5400',
         'pic' => 'img/lot-6.jpg'
-    ],
+    ]
 ];
 
     // пользовательские функции
@@ -111,7 +137,15 @@ function format_price ($price) {
         <h2 class="promo__title">Нужен стафф для катки?</h2>
         <p class="promo__text">На нашем интернет-аукционе ты найдёшь самое эксклюзивное сноубордическое и горнолыжное снаряжение.</p>
         <ul class="promo__list">
-            <li class="promo__item promo__item--boards">
+
+          <!-- PHP код для показа промо категорий -->
+          <?foreach ($categories as $key => $value): ?>
+            <li class="promo__item promo__item--<?=$value['eng_name']?>">
+                  <a class="promo__link" href="all-lots.html"><?=$value['ru_name']?></a>
+              </li>
+          <?endforeach;?>
+
+          <!--  <li class="promo__item promo__item--boards">
                 <a class="promo__link" href="all-lots.html">Доски и лыжи</a>
             </li>
             <li class="promo__item promo__item--attachment">
@@ -128,7 +162,7 @@ function format_price ($price) {
             </li>
             <li class="promo__item promo__item--other">
                 <a class="promo__link" href="all-lots.html">Разное</a>
-            </li>
+            </li> -->
         </ul>
     </section>
     <section class="lots">
@@ -136,6 +170,7 @@ function format_price ($price) {
             <h2>Открытые лоты</h2>
         </div>
         <ul class="lots__list">
+
             <!-- код для показа списка лотов -->
             <?foreach ($lots__list as $key => $value): ?>
             <li class="lots__item lot">
@@ -190,7 +225,7 @@ function format_price ($price) {
           <!-- PHP код для показа категорий -->
           <?foreach ($categories as $key => $value): ?>
             <li class="nav__item">
-                <a href="all-lots.html"><?=$value?></a>
+                <a href="all-lots.html"><?=$value['ru_name']?></a>
             </li>
           <?endforeach;?>
 
