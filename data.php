@@ -6,3 +6,74 @@ $bets = [
     ['name' => 'Евгений', 'price' => 10500, 'ts' => strtotime('-' . rand(25, 50) .' hour')],
     ['name' => 'Семён', 'price' => 10000, 'ts' => strtotime('last week')]
 ];
+
+$is_auth = (bool) rand(0, 1);
+
+$user_name = 'Константин';
+$user_avatar = 'img/user.jpg';
+$title_page= 'Главная';
+//$categories = ["Доски и лыжи", "Крепления", "Ботинки", "Одежда", "Инструменты", "Разное"];
+$categories = [
+    [
+        'ru_name' => 'Доски и лыжи',
+        'eng_name' => 'boards'
+    ],
+    [
+        'ru_name' => 'Крепления',
+        'eng_name' => 'attachment'
+    ],
+    [
+        'ru_name' => 'Ботинки',
+        'eng_name' => 'boots'
+    ],
+    [
+        'ru_name' => 'Одежда',
+        'eng_name' => 'clothing'
+    ],
+    [
+        'ru_name' => 'Инструменты',
+        'eng_name' => 'tools'
+    ],
+    [
+        'ru_name' => 'Разное',
+        'eng_name' => 'other'
+    ]
+];
+$lots__list = [
+    [
+        'name' => '2014 Rossignol District Snowboard<h1>HI</h1>',
+        'category' => $categories[0]['ru_name'],
+        'price' => '10999',
+        'pic' => 'img/lot-1.jpg'
+    ],
+    [
+        'name' => 'DC Ply Mens 2016/2017 Snowboard',
+        'category' => $categories[0]['ru_name'],
+        'price' => '159999',
+        'pic' => 'img/lot-2.jpg'
+    ],
+    [
+        'name' => 'Крепления Union Contact Pro 2015 года размер L/XL',
+        'category' => $categories[1]['ru_name'],
+        'price' => '8000',
+        'pic' => 'img/lot-3.jpg'
+    ],
+    [
+        'name' => 'Ботинки для сноуборда DC Mutiny Charocal',
+        'category' => $categories[2]['ru_name'],
+        'price' => '10999',
+        'pic' => 'img/lot-4.jpg'
+    ],
+    [
+        'name' => 'Куртка для сноуборда DC Mutiny Charocal',
+        'category' => $categories[3]['ru_name'],
+        'price' => '7500',
+        'pic' => 'img/lot-5.jpg'
+    ],
+    [
+        'name' => 'Маска Oakley Canopy',
+        'category' => $categories[5]['ru_name'],
+        'price' => '5400',
+        'pic' => 'img/lot-6.jpg'
+    ]
+];
