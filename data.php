@@ -44,36 +44,42 @@ $lots__list = [
         'name' => '2014 Rossignol District Snowboard',
         'category' => $categories[0]['ru_name'],
         'price' => '10999',
-        'pic' => 'img/lot-1.jpg'
+        'pic' => 'img/lot-1.jpg',
+        'closing_time' =>'2018-05-05'
     ],
     [
         'name' => 'DC Ply Mens 2016/2017 Snowboard',
         'category' => $categories[0]['ru_name'],
         'price' => '159999',
-        'pic' => 'img/lot-2.jpg'
+        'pic' => 'img/lot-2.jpg',
+        'closing_time' =>'2018-05-07'
     ],
     [
         'name' => 'Крепления Union Contact Pro 2015 года размер L/XL',
         'category' => $categories[1]['ru_name'],
         'price' => '8000',
-        'pic' => 'img/lot-3.jpg'
+        'pic' => 'img/lot-3.jpg',
+        'closing_time' =>'2018-05-10'
     ],
     [
         'name' => 'Ботинки для сноуборда DC Mutiny Charocal',
         'category' => $categories[2]['ru_name'],
         'price' => '10999',
-        'pic' => 'img/lot-4.jpg'
+        'pic' => 'img/lot-4.jpg',
+        'closing_time' =>'2018-05-15'
     ],
     [
         'name' => 'Куртка для сноуборда DC Mutiny Charocal',
         'category' => $categories[3]['ru_name'],
         'price' => '7500',
-        'pic' => 'img/lot-5.jpg'
+        'pic' => 'img/lot-5.jpg',
+        'closing_time' =>'2018-05-06'
     ],
     [
         'name' => 'Маска Oakley Canopy',
         'category' => $categories[5]['ru_name'],
         'price' => '5400',
-        'pic' => 'img/lot-6.jpg'
+        'pic' => 'img/lot-6.jpg',
+        'closing_time' =>'2018-05-09'
     ]
 ];

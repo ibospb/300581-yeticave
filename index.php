@@ -1,6 +1,7 @@
 <?php
 require_once ('functions.php');
 require_once ('data.php');
+date_default_timezone_set('Europe/Moscow');
 
 $content = renderTemplate('templates/index.php', ['categories' => $categories,
                                                     'lots__list' => $lots__list]
