@@ -27,3 +27,15 @@ function renderTemplate ($path, $data) {
   }
   return $out_content;
 }
+
+// функция отсчета времени до начала следующих суток
+
+function time_to_midnight () {
+  date_default_timezone_set('Europe/Moscow');
+  $midnight = strtotime('tomorrow');
+  $second= $midnight-time();
+  $hours = floor($second/3600);
+  $minutes =floor(($second% 3600)/60);
+  return $hours.':'.$minutes;
+
+}
