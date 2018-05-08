@@ -22,9 +22,9 @@ CREATE TABLE category (
 CREATE TABLE lot (
 	id		INT AUTO_INCREMENT PRIMARY KEY,
 	name		CHAR(64),
-	specification	CHAR(64),
-	start_price	CHAR(64),
-	stepprice	CHAR(64),
+	specification	TEXT,
+	start_price	DECIMAL,
+	stepprice	INT,
 	category_id	INT,
 	user_id		INT,
 	user_win	INT,
@@ -37,7 +37,7 @@ CREATE TABLE lot (
 
 CREATE TABLE bet (
 	id		INT AUTO_INCREMENT PRIMARY KEY,
-	bet		CHAR(64),
+	bet		DECIMAL,
 	dt_add		DATETIME,
 	lot_id		INT,
 	user_id		INT,
