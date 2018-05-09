@@ -5,42 +5,44 @@ CREATE DATABASE YETICAVE
 USE yeticave;
 
 CREATE TABLE user (
-	id		INT AUTO_INCREMENT PRIMARY KEY,
-	email		CHAR(64),
-	password	CHAR(64),
+	user_id		INT AUTO_INCREMENT PRIMARY KEY,
+	name 	VARCHAR(64),
+	email		VARCHAR(64),
+	password	VARCHAR(64),
 	contact_details	TEXT,
-	avatar_path	CHAR(64),
+	avatar_path	VARCHAR(100),
 	dt_add		DATETIME
 );
 
 CREATE TABLE category (
-	id		INT AUTO_INCREMENT PRIMARY KEY,
-	ru_name		CHAR(64),
-	eng_name	CHAR(64)
+	category_id		INT AUTO_INCREMENT PRIMARY KEY,
+	ru_name		VARCHAR(64),
+	eng_name	VARCHAR(64)
 );
 
 CREATE TABLE lot (
-	id		INT AUTO_INCREMENT PRIMARY KEY,
-	name		CHAR(64),
+	lot_id		INT AUTO_INCREMENT PRIMARY KEY,
+	name		VARCHAR(64),
 	specification	TEXT,
 	start_price	DECIMAL,
-	stepprice	INT,
+	step_price	INT,
 	category_id	INT,
 	user_id		INT,
 	user_win	INT,
+	dt_add DATETIME,
 	dt_close	DATETIME,
-	pic_path	CHAR(64),
-	FOREIGN KEY (category_id) REFERENCES category(id),
-	FOREIGN KEY (user_id) REFERENCES user(id),
-	FOREIGN KEY (user_win) REFERENCES user(id)
+	pic_path	VARCHAR(100),
+	FOREIGN KEY (category_id) REFERENCES category(category_id),
+	FOREIGN KEY (user_id) REFERENCES user(user_id),
+	FOREIGN KEY (user_win) REFERENCES user(user_id)
 );
 
 CREATE TABLE bet (
-	id		INT AUTO_INCREMENT PRIMARY KEY,
+	bet_id		INT AUTO_INCREMENT PRIMARY KEY,
 	bet		DECIMAL,
 	dt_add		DATETIME,
 	lot_id		INT,
-	user_id		INT,
-	FOREIGN KEY (lot_id) REFERENCES lot(id),
-	FOREIGN KEY (user_id) REFERENCES user(id)
+	user_id	INT,
+	FOREIGN KEY (lot_id) REFERENCES lot(lot_id),
+	FOREIGN KEY (user_id) REFERENCES user(user_id)
 );
