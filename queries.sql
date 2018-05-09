@@ -72,6 +72,7 @@ WHERE lot_id='2';
 
 
     /* получить список самых свежих ставок
+   для лота по его идентификатору
    */
  USE yeticave;
  SELECT bet, bet.dt_add FROM bet
