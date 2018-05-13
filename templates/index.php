@@ -22,18 +22,18 @@
         <?foreach ($lots__list as $key => $value): ?>
         <li class="lots__item lot">
             <div class="lot__image">
-                <img src="<?=$value['pic']?>" width="350" height="260" alt="<?=htmlspecialchars($value['name'])?>">
+                <img src="<?=$value['pic_path']?>" width="350" height="260" alt="<?=htmlspecialchars($value['name'])?>">
             </div>
             <div class="lot__info">
-                <span class="lot__category"><?=$value['category']?></span>
+                <span class="lot__category"><?=$value['ru_name']?></span>
                 <h3 class="lot__title"><a class="text-link" href="lot.html"><?=htmlspecialchars($value['name'])?></a></h3>
                 <div class="lot__state">
                     <div class="lot__rate">
-                        <span class="lot__amount">Стартовая цена</span>
-                        <span class="lot__cost"><?=format_price($value['price'])?></span>
+                        <span class="lot__amount"><?=total_bet($value['count_bet'])?></span>
+                        <span class="lot__cost"><?=format_price($value['total_price'])?></span>
                     </div>
                     <div class="lot__timer timer">
-                      <?=timerLot($value['closing_time'])?>
+                      <?=timerLot($value['dt_close'])?>
                     </div>
                 </div>
             </div>

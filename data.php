@@ -13,7 +13,7 @@ $user_name = 'Константин';
 $user_avatar = 'img/user.jpg';
 $title_page= 'Главная';
 
-$categories = [
+/*$categories = [
     [
         'ru_name' => 'Доски и лыжи',
         'eng_name' => 'boards'
@@ -39,7 +39,8 @@ $categories = [
         'eng_name' => 'other'
     ]
 ];
-$lots__list = [
+*/
+/*$lots__list = [
     [
         'name' => '2014 Rossignol District Snowboard',
         'category' => $categories[0]['ru_name'],
@@ -82,4 +83,4 @@ $lots__list = [
         'pic' => 'img/lot-6.jpg',
         'closing_time' =>'2018-05-09'
     ]
-];
+]; */

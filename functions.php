@@ -27,33 +27,32 @@ function renderTemplate ($path, $data) {
   return $out_content;
 }
 
-// функция отсчета времени до начала следующих суток
-
-/* function time_to_midnight () {
-  $midnight = strtotime('tomorrow');
-  $second= $midnight-time();
-  $hours = floor($second/3600);
-  $minutes =floor(($second% 3600)/60);
-  return $hours.':'.$minutes;
-
-} */
-
-// функция отсчета времени до окончания торгов
-// входные данные: дата окончания торгов
-// функция возвращает: 7d<'d-m-Y' , 1d <'j'<= 7d , 'h:m' <= 1d
-/* function timerLot ($closing_time) {
-  $secs_to_end= strtotime($closing_time)-time();
-  if ($secs_to_end<=86400) {
-   $timer= date('g ч m мин', $secs_to_end);
+/*function total_bet($count_bet) {
+$out='Стартовая цена';
+if (($count_bet%10>=5 && $count_bet%10<=9) or ($count_bet>=10 && $count_bet<=20)) {
+  $out=$count_bet.' ставок';
+} elseif ($count_bet%10<=4 && $count_bet%10>=2) {
+    $out=$count_bet.' ставки';
+  } elseif ($count_bet!=0){
+    $out=$count_bet.' ставка';
   }
-  elseif ($secs_to_end>=86400 && $secs_to_end<=604800) {
-     $timer=date('j дня', $secs_to_end);
+  return $out; //1 ка 2,3,4 ки 5,6,7,8,9, ставок 21ка 22ки 23ки 25ставок
+}
+*/
+
+/* функция склоняет слово "ставка" в зависимости от количества ставок
+если ставок нет (кол-во ставок равно 0), то выводит "Стартовая цена" */
+function total_bet($count_bet) {
+$out='Стартовая цена';
+if ($count_bet%10>=2 && $count_bet%10<=4 && ($count_bet%100<10 or $count_bet%100>=20)) {
+  $out=$count_bet.' ставки';
+} elseif ($count_bet%10==1 && $count_bet%100!=11) {
+    $out=$count_bet.' ставка';
+  } elseif ($count_bet!=0){
+    $out=$count_bet.' ставок';
   }
-  else {
-    $timer= date('d-m-Y', strtotime($closing_time));
-  }
-  return $timer;
-} */
+  return $out; //1 ка 2,3,4 ки 5,6,7,8,9,..20 ставок 21 ка 22..24 ки 25..30 ок
+}
 
 function timerLot ($closing_time) {
   $now=time();
@@ -70,7 +69,7 @@ function timerLot ($closing_time) {
   } elseif ($days<=7 && $days>1) {
     $timer= $days.' дня';
   } else {
-    $timer= date('d:m:Y', strtotime($closing_time));
+    $timer= date('d-m-Y', strtotime($closing_time));
   }
 
   return $timer;
