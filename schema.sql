@@ -48,6 +48,4 @@ CREATE TABLE bet (
 	FOREIGN KEY (user_id) REFERENCES user(user_id)
 );
 CREATE UNIQUE INDEX email ON user(email);
--- не вижу смысла CREATE INDEX c_name ON category(ru_name,eng_name); 
-CREATE INDEX dt_close ON lot(dt_close);
 CREATE INDEX lot_id ON bet(lot_id);

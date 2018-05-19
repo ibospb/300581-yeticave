@@ -19,7 +19,7 @@
     <ul class="lots__list">
 
         <!-- код для показа списка лотов -->
-        <?foreach ($lots__list as $key => $value): ?>
+        <?foreach ($lotsList as $key => $value): ?>
         <li class="lots__item lot">
             <div class="lot__image">
                 <img src="<?=$value['pic_path']?>" width="350" height="260" alt="<?=htmlspecialchars($value['name'])?>">
@@ -29,8 +29,8 @@
                 <h3 class="lot__title"><a class="text-link" href="lot.html"><?=htmlspecialchars($value['name'])?></a></h3>
                 <div class="lot__state">
                     <div class="lot__rate">
-                        <span class="lot__amount"><?=total_bet($value['count_bet'])?></span>
-                        <span class="lot__cost"><?=format_price($value['total_price'])?></span>
+                        <span class="lot__amount"><?=totalBet($value['count_bet'])?></span>
+                        <span class="lot__cost"><?=formatPrice($value['total_price'])?></span>
                     </div>
                     <div class="lot__timer timer">
                       <?=timerLot($value['dt_close'])?>

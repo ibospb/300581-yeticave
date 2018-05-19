@@ -1,4 +1,12 @@
 <?php
+
+$isAuth = (bool) rand(0, 1);
+
+$userName = 'Константин';
+$userAvatar = 'img/user.jpg';
+$titlePage= 'Главная';
+
+/*
 // ставки пользователей, которыми надо заполнить таблицу
 $bets = [
     ['name' => 'Иван', 'price' => 11500, 'ts' => strtotime('-' . rand(1, 50) .' minute')],
@@ -7,13 +15,7 @@ $bets = [
     ['name' => 'Семён', 'price' => 10000, 'ts' => strtotime('last week')]
 ];
 
-$is_auth = (bool) rand(0, 1);
-
-$user_name = 'Константин';
-$user_avatar = 'img/user.jpg';
-$title_page= 'Главная';
-
-/*$categories = [
+$categories = [
     [
         'ru_name' => 'Доски и лыжи',
         'eng_name' => 'boards'
@@ -40,7 +42,8 @@ $title_page= 'Главная';
     ]
 ];
 */
-/*$lots__list = [
+/*
+$lots__list = [
     [
         'name' => '2014 Rossignol District Snowboard',
         'category' => $categories[0]['ru_name'],
@@ -83,4 +86,5 @@ $title_page= 'Главная';
         'pic' => 'img/lot-6.jpg',
         'closing_time' =>'2018-05-09'
     ]
-]; */
+];
+*/

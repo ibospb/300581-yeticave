@@ -10,7 +10,7 @@ if (!$con){
   exit();
 }
 else {
-  $sql= 'SELECT ru_name, eng_name FROM category';
+  $sql= 'SELECT * FROM category';
   $result = mysqli_query($con,$sql);
   if (!$result) {
     $error=mysqli_error($con);
@@ -29,7 +29,8 @@ else {
         LEFT JOIN category USING(category_id)
         WHERE dt_close>NOW()
         GROUP BY lot.lot_id
-        ORDER BY lot.dt_add DESC';
+        ORDER BY lot.dt_add DESC
+        LIMIT 6';
   $result = mysqli_query($con,$sql);
   if(!$result) {
     $error=mysqli_error($con);
@@ -37,23 +38,23 @@ else {
     exit();
   }
   else {
-  $lots__list=mysqli_fetch_all($result, MYSQLI_ASSOC);
+  $lotsList=mysqli_fetch_all($result, MYSQLI_ASSOC);
   }
 }
 $content = renderTemplate('templates/index.php', ['categories' => $categories,
-                                                    'lots__list' => $lots__list]
+                                                    'lotsList' => $lotsList]
                                                   );
 
-$layout_content = renderTemplate('templates/layout.php', ['content'=> $content,
-                                                          'title_page'=> $title_page,
-                                                        'user_name'=>$user_name,
-                                                      'user_avatar'=>$user_avatar,
+$layoutContent = renderTemplate('templates/layout.php', ['content'=> $content,
+                                                          'titlePage'=> $titlePage,
+                                                        'userName'=>$userName,
+                                                      'userAvatar'=>$userAvatar,
                                                     'categories'=>$categories,
-                                                  'is_auth'=>$is_auth]);
-print ($layout_content);
+                                                  'isAuth'=>$isAuth]);
+print ($layoutContent);
 /*$a=0;
 while ($a++ < 100) {
-  echo total_bet($a).'<br>';
+  echo totalBet($a).'<br>';
 }
 */
 

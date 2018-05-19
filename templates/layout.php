@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title><?=$title_page?></title>
+    <title><?=$titlePage?></title>
     <link href="css/normalize.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
 </head>
@@ -23,12 +23,12 @@
         <nav class="user-menu">
 
           <!-- PHP код для показа аватара пользователя -->
-          <?if ($is_auth) :?>
+          <?if ($isAuth) :?>
               <div class="user-menu__image">
-                <img src="<?=$user_avatar?>" width="40" height="40" alt="Пользователь">
+                <img src="<?=$userAvatar?>" width="40" height="40" alt="Пользователь">
               </div>
               <div class="user-menu__logged">
-                <p><?=htmlspecialchars($user_name)?></p>
+                <p><?=htmlspecialchars($userName)?></p>
               </div>
            <?else:?>
            <ul class="user-menu__list">
