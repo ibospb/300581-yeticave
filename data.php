@@ -1,10 +1,14 @@
 <?php
-
+date_default_timezone_set('Europe/Moscow');
 $isAuth = (bool) rand(0, 1);
 
 $userName = 'Константин';
 $userAvatar = 'img/user.jpg';
 $titlePage= 'Главная';
+
+
+
+
 
 /*
 // ставки пользователей, которыми надо заполнить таблицу
