@@ -40,16 +40,12 @@ $content = renderTemplate('templates/index.php', ['categories' => $categories,
                                                   );
 
 $layoutContent = renderTemplate('templates/layout.php', ['content'=> $content,
-                                                          'titlePage'=> $titlePage,
+                                                          'titlePage'=>'Главная',
                                                         'userName'=>$userName,
                                                       'userAvatar'=>$userAvatar,
                                                     'categories'=>$categories,
                                                   'isAuth'=>$isAuth]);
 print ($layoutContent);
-/*$a=0;
-while ($a++ < 100) {
-  echo totalBet($a).'<br>';
-}
-*/
+
 
 ?>

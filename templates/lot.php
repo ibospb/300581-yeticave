@@ -1,4 +1,4 @@
-<main>
+
 <nav class="nav">
   <ul class="nav__list container">
     <!-- PHP код для показа категорий -->
@@ -10,14 +10,14 @@
   </ul>
 </nav>
   <section class="lot-item container">
-    <h2><?=$lot['name']?></h2>
+    <h2><?=htmlspecialchars($lot['name'])?></h2>
     <div class="lot-item__content">
       <div class="lot-item__left">
         <div class="lot-item__image">
-          <img src="<?=$lot['pic_path']?>" width="730" height="548" alt="Сноуборд">
+          <img src="<?=$lot['pic_path']?>" width="730" height="548" alt="<?=htmlspecialchars($lot['name'])?>">
         </div>
         <p class="lot-item__category">Категория: <span><?=$lot['ru_name']?></span></p>
-        <p class="lot-item__description"><?=$lot['specification']?></p>
+        <p class="lot-item__description"><?=htmlspecialchars($lot['specification'])?></p>
       </div>
       <div class="lot-item__right">
         <div class="lot-item__state">
@@ -56,4 +56,3 @@
       </div>
     </div>
   </section>
-</main>

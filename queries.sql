@@ -14,12 +14,12 @@ VALUES  ('Игнат','ignat.v@gmail.com','2018-03-28','$2y$10$OqvsKHQwr0Wk6FMZD
         ('Руслан','warrior07@mail.ru','2018-02-11','$2y$10$2OxpEH7narYpkOT1H5cApezuzh10tZEEQ2axgFOaKW.55LxIJBgWW','Современные технологии достигли такого уровня, что сплоченность команды профессионалов способствует повышению качества новых предложений.');
 
 INSERT INTO lot (name, specification, start_price, step_price, category_id, user_id, user_win, dt_close, dt_add, pic_path)
-VALUES  ('2014 Rossignol District Snowboard', 'Все самое лучшее',  10999,   500,  1,1,2,   '2018-05-11','2018-05-09','img/lot-1.jpg'),
-        ('DC Ply Mens 2016/2017 Snowboard',   'Б\У чутка пахнет',  159999,  1000, 1,2,DEFAULT,'2018-05-18','2018-05-02','img/lot-2.jpg'),
-        ('Крепления Union Contact Pro 2015 года размер L/XL','ух', 8000,    300,  2,1,1,   '2018-05-10','2018-04-29','img/lot-3.jpg'),
-        ('Ботинки для сноуборда DC Mutiny Charocal','надо брать',  10999,   100,  3,2,DEFAULT,'2018-05-15','2018-05-05','img/lot-4.jpg'),
-        ('Куртка для сноуборда DC Mutiny Charocal','хороший слон', 7500,    50,   4,2,2,   '2018-05-06','2018-05-03','img/lot-5.jpg'),
-        ('Маска Oakley Canopy','Есть кондиционер и бинты',         5400,    150,  6,3,3,   '2018-05-09','2018-05-07','img/lot-6.jpg');
+VALUES  ('2014 Rossignol District Snowboard', 'Все самое лучшее',  10999,   500,  1,1,DEFAULT,   '2018-06-11','2018-05-09','img/lot-1.jpg'),
+        ('DC Ply Mens 2016/2017 Snowboard',   'Б\У чутка пахнет',  159999,  1000, 1,2,DEFAULT,'2018-06-3','2018-05-02','img/lot-2.jpg'),
+        ('Крепления Union Contact Pro 2015 года размер L/XL','ух', 8000,    300,  2,1,DEFAULT,   '2018-05-25','2018-04-29','img/lot-3.jpg'),
+        ('Ботинки для сноуборда DC Mutiny Charocal','надо брать',  10999,   100,  3,2,DEFAULT,'2018-06-15','2018-05-05','img/lot-4.jpg'),
+        ('Куртка для сноуборда DC Mutiny Charocal','хороший слон', 7500,    50,   4,2,DEFAULT,   '2018-06-05','2018-05-03','img/lot-5.jpg'),
+        ('Маска Oakley Canopy','Есть кондиционер и бинты',         5400,    150,  6,3,DEFAULT,   '2018-06-09','2018-05-07','img/lot-6.jpg');
 
 INSERT INTO bet (bet, dt_add, lot_id, user_id)
 VALUES  (11500,'2018-05-08',5,2),
@@ -27,8 +27,13 @@ VALUES  (11500,'2018-05-08',5,2),
         (12000,'2018-05-09',4,2),
         (25000,'2018-05-08',3,1),
         (6500,'2018-05-05',6,1),
-        (1050,'2018-05-06',1,3),
-        (10000,'2018-05-07',6,2);
+        (3000,'2018-05-06',5,3),
+        (5000,'2018-05-10',3,1),
+        (10000,'2018-05-16',1,2),
+        (12000,'2018-05-21',4,2),
+        (2900,'2018-05-10',2,1),
+        (7690,'2018-05-18',4,3),
+        (10000,'2018-05-07',1,1);
 
 
 
@@ -43,9 +48,9 @@ SELECT ru_name, eng_name FROM category;
   */
 USE yeticave;
 SELECT lot_id, name, start_price, pic_path, ru_name,
---считаем кол-во ставок на лот
+-- считаем кол-во ставок на лот
 count(bet) AS count_bet,
---считаем конечную цену
+-- считаем конечную цену
 GREATEST(COALESCE(MAX(bet),0), start_price) AS total_price
 From lot
 LEFT JOIN bet USING(lot_id)

@@ -4,7 +4,7 @@ $isAuth = (bool) rand(0, 1);
 
 $userName = 'Константин';
 $userAvatar = 'img/user.jpg';
-$titlePage= 'Главная';
+
 
 
 

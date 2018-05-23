@@ -21,7 +21,8 @@ if (isset($_GET['id'])) {
   mysqli_stmt_execute($stmt);
   $result = mysqli_stmt_get_result($stmt);
   $lot = mysqli_fetch_assoc($result);
-  //var_dump($lot);
+  $titlePage=$lot['name'];
+
   // получаем ставки по id //
   $sql =
       'SELECT user.name, bet, bet.dt_add  FROM bet
@@ -33,13 +34,12 @@ if (isset($_GET['id'])) {
       mysqli_stmt_execute($stmt);
       $result = mysqli_stmt_get_result($stmt);
       $bets = mysqli_fetch_all($result, MYSQLI_ASSOC);
-//  var_dump($bets);
+
 }
 if (!isset($lot)) {
   http_response_code(404);
-  //header('HTTP/1.1 404 Not Found');
-  //header('Status: 404 Not Found');
   $content='нет такого лота';
+  $titlePage='404';
 }
 $sql= 'SELECT * FROM category';
 $result = mysqli_query($con,$sql);
@@ -50,7 +50,7 @@ if (!$result) {
 }
 else {
   $categories=mysqli_fetch_all($result, MYSQLI_ASSOC);
-//var_dump($categories);
+
 }
 
 if (!isset($content)){
