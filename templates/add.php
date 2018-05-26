@@ -9,7 +9,8 @@
       <?endforeach;?>
     </ul>
   </nav>
-  <form class="form form--add-lot container form--invalid" action="" method="post" enctype="multipart/form-data"> <!-- form--invalid -->
+  <? $classname= isset($errors) ? 'form--invalid' : ''; ?>
+  <form class="form form--add-lot <?=$classname?>" action="" method="post" enctype="multipart/form-data"> <!-- form--invalid -->
     <h2>Добавление лота</h2>
     <div class="form__container-two">
 
@@ -20,7 +21,7 @@
       <div class="form__item <?=$classname?>"> <!-- form__item--invalid -->
         <label for="lot-name">Наименование</label>
         <input id="lot-name" type="text" name="lot[name]" placeholder="Введите наименование лота" value=<?=$value;?>>
-        <span class="form__error <?=$classname?>"><?=$errorMsg?></span>
+        <span class="form__error"><?=$errorMsg?></span>
       </div>
 
       <? $field='category';
@@ -36,7 +37,7 @@
               <option value="<?=$val['category_id'];?>"<?=(isset($lot['category']) && ($val['category_id']==$lot['category'])) ? 'selected' : '';?>><?=$val['ru_name'];?></option>
             <?endforeach;?>
         </select>
-        <span class="form__error <?=$classname;?>"><?=$errorMsg?></span>
+        <span class="form__error"><?=$errorMsg?></span>
       </div>
     </div>
 
@@ -51,11 +52,12 @@
     </div>
 
     <?  $field='path';
-        $Classname= isset($lot[$field]) ? 'form__item--uploaded' : '';
+        $classname= isset($lot[$field]) ? 'form__item--uploaded' : 'form__item--invalid';
         $value= isset($lot[$field]) ? $lot[$field] : '';
-        $errorMsg=isset($errors['file']) ? $errors['file'] : '';?>
-    <div class="form__item form__item--file <?=$Classname;?>"> <!-- form__item--uploaded -->
+        $errorMsg=isset($errors[$field]) ? $errors[$field] : '';?>
+    <div class="form__item form__item--file <?=$classname;?>"> <!-- form__item--uploaded -->
       <label>Изображение</label>
+
       <div class="preview">
         <button class="preview__remove" type="button">x</button>
         <div class="preview__img">
@@ -64,9 +66,9 @@
       </div>
       <div class="form__input-file">
         <input class="visually-hidden" type="file" id="photo2" name="lot_img" value="">
+        <span class="form__error"><?=$errorMsg?></span>
         <label for="photo2">
           <span>+ Добавить</span>
-          <?=$errorMsg?>
         </label>
       </div>
     </div>
@@ -79,7 +81,7 @@
       <div class="form__item form__item--small <?=$classname;?>">
         <label for="lot-rate">Начальная цена</label>
         <input id="lot-rate" type="number" name="lot[rate]" placeholder="0" value=<?=$value;?>>
-        <span class="form__error <?=$classname;?>"><?=$errorMsg?></span>
+        <span class="form__error"><?=$errorMsg?></span>
       </div>
 
       <?  $field='step';
@@ -89,7 +91,7 @@
       <div class="form__item form__item--small <?=$classname;?>">
         <label for="lot-step">Шаг ставки</label>
         <input id="lot-step" type="number" name="lot[step]" placeholder="0" value=<?=$value;?>>
-        <span class="form__error <?=$classname;?>"><?=$errorMsg?></span>
+        <span class="form__error"><?=$errorMsg?></span>
       </div>
 
       <?  $field='date';
@@ -99,10 +101,11 @@
       <div class="form__item <?=$classname;?>">
         <label for="lot-date">Дата окончания торгов</label>
         <input class="form__input-date" id="lot-date" type="date" name="lot[date]" value=<?=$value;?>>
-        <span class="form__error <?=$classname;?>"><?=$errorMsg?></span>
+        <span class="form__error"><?=$errorMsg?></span>
       </div>
     </div>
-    <span class="form__error form__error--bottom"><?=isset($errors) ? ' Пожалуйста, исправьте ошибки в форме.' : '';?></span>
+    <span class="form__error form__error--bottom"><?=isset($errors) ?'Пожалуйста, исправьте ошибки в форме.' : '';?></span>
+
     <button type="submit" class="button">Добавить лот</button>
   </form>
 </main>

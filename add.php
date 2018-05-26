@@ -15,7 +15,7 @@ else {
 
 }
 // валидацция формы
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['lot'])) {
 	$lot = $_POST['lot'];
 
 // проверка на обязательные поля
@@ -25,9 +25,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $errors['name'] = 'Это поле надо заполнить';
   }
 
-  if (empty($lot['category'])) {
+
+  if (empty($lot['category']) || !isset($categories[$lot['category']]['category_id'])) {
     $errors['category'] = 'Это поле надо заполнить';
   }
+
 
   if (empty($lot['message'])) {
     $errors['message'] = 'Это поле надо заполнить';
@@ -58,22 +60,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 // валидация изображения
   if (isset($_FILES['lot_img']['name']) && file_exists($_FILES['lot_img']['tmp_name']) && is_uploaded_file($_FILES['lot_img']['tmp_name'])) {
     $tmp_name = $_FILES['lot_img']['tmp_name'];
-
-
     $finfo = finfo_open(FILEINFO_MIME_TYPE);
     $file_type = finfo_file($finfo, $tmp_name);
-    if ($file_type !== 'image/jpeg') {
-      $errors['file'] = 'Загрузите картинку в формате JPG';
+    if (!($file_type == 'image/jpeg' || $file_type == 'image/png')) {
+      $errors['path'] = 'Загрузите картинку в формате JPG или PNG';
     }
     else {
-      $filename = uniqid().'.jpg';
+      if ($file_type == 'image/png') {
+        $fileExtension= '.png';
+      }
+      else {
+        $fileExtension= '.jpg';
+      }
+      $filename = uniqid().$fileExtension;
       $lot['path'] = 'img/'.$filename;
       move_uploaded_file($_FILES['lot_img']['tmp_name'], $lot['path']);
-
     }
   }
+
   else {
-    $errors['file'] = 'Вы не загрузили файл';
+    $errors['path'] = 'Вы не загрузили файл';
   }
 	if (count($errors)) {
 		$content = renderTemplate('templates/add.php', ['lot' => $lot,
@@ -113,6 +119,4 @@ $layoutContent = renderTemplate('templates/layout.php', ['content'=> $content,
                                                   'categories'=>$categories,
                                                 'isAuth'=>$isAuth]);
 print ($layoutContent);
-
-
 ?>
