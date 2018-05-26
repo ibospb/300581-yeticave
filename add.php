@@ -3,6 +3,12 @@ require_once ('db_connect.php');
 require_once ('functions.php');
 require_once ('data.php');
 
+session_start();
+if (!isset($_SESSION['user'])) {
+ header("Location: /");
+ exit();
+}
+
 $sql= 'SELECT * FROM category';
 $result = mysqli_query($con,$sql);
 if (!$result) {
@@ -114,9 +120,6 @@ else {
 }
 $layoutContent = renderTemplate('templates/layout.php', ['content'=> $content,
                                                         'titlePage'=>'Добавление лота',
-                                                      'userName'=>$userName,
-                                                    'userAvatar'=>$userAvatar,
-                                                  'categories'=>$categories,
-                                                'isAuth'=>$isAuth]);
+                                                  'categories'=>$categories]);
 print ($layoutContent);
 ?>

@@ -3,6 +3,8 @@ require_once ('db_connect.php');
 require_once ('functions.php');
 require_once ('data.php');
 
+session_start();
+
 /* Работа с БД */
 $sql= 'SELECT * FROM category';
 $result = mysqli_query($con,$sql);
@@ -41,10 +43,7 @@ $content = renderTemplate('templates/index.php', ['categories' => $categories,
 
 $layoutContent = renderTemplate('templates/layout.php', ['content'=> $content,
                                                           'titlePage'=>'Главная',
-                                                        'userName'=>$userName,
-                                                      'userAvatar'=>$userAvatar,
-                                                    'categories'=>$categories,
-                                                  'isAuth'=>$isAuth]);
+                                                    'categories'=>$categories]);
 print ($layoutContent);
 
 

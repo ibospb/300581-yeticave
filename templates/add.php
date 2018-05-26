@@ -1,4 +1,3 @@
-<main>
   <nav class="nav">
     <ul class="nav__list container">
       <!-- PHP код для показа категорий -->
@@ -10,7 +9,7 @@
     </ul>
   </nav>
   <? $classname= isset($errors) ? 'form--invalid' : ''; ?>
-  <form class="form form--add-lot <?=$classname?>" action="" method="post" enctype="multipart/form-data"> <!-- form--invalid -->
+  <form class="form form--add-lot container <?=$classname?>" action="" method="post" enctype="multipart/form-data"> <!-- form--invalid -->
     <h2>Добавление лота</h2>
     <div class="form__container-two">
 
@@ -108,4 +107,3 @@
 
     <button type="submit" class="button">Добавить лот</button>
   </form>
-</main>

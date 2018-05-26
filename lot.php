@@ -2,6 +2,8 @@
 require_once ('db_connect.php');
 require_once ('functions.php');
 require_once ('data.php');
+
+session_start();
 // проверка отправки GET
 if (isset($_GET['id'])) {
   $id=$_GET['id'];
@@ -61,10 +63,7 @@ if (!isset($content)){
 
 $layoutContent = renderTemplate('templates/layout.php', ['content'=> $content,
                                                           'titlePage'=> $titlePage,
-                                                        'userName'=>$userName,
-                                                      'userAvatar'=>$userAvatar,
-                                                    'categories'=>$categories,
-                                                  'isAuth'=>$isAuth]);
+                                                    'categories'=>$categories]);
 print ($layoutContent);
 
 

@@ -20,6 +20,8 @@
         <p class="lot-item__description"><?=htmlspecialchars($lot['specification'])?></p>
       </div>
       <div class="lot-item__right">
+
+        <? if (isset($_SESSION['user'])):?>
         <div class="lot-item__state">
           <div class="lot-item__timer timer">
             <?=timerLot($lot['dt_close'])?>
@@ -41,6 +43,8 @@
             <button type="submit" class="button">Сделать ставку</button>
           </form>
         </div>
+        <?endif;?>
+
         <div class="history">
           <h3>История ставок (<span><?=$lot['count_bet']?></span>)</h3>
           <table class="history__list">

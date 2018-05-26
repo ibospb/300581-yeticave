@@ -3,6 +3,8 @@ require_once ('db_connect.php');
 require_once ('functions.php');
 require_once ('data.php');
 
+session_start();
+
 $sql= 'SELECT * FROM category';
 $result = mysqli_query($con,$sql);
 if (!$result) {
@@ -21,7 +23,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST)) {
 // валидация полученных данных
 	$errors = [];
 
-  $field=$data['email'];
   if (empty($data['email'])) {
     $errors['email'] = 'Введите e-mail';
   }
@@ -118,9 +119,6 @@ $content = renderTemplate('templates/sign-up.php', ['categories'=>$categories]);
 }
 $layoutContent = renderTemplate('templates/layout.php', ['content'=> $content,
                                                         'titlePage'=>'Регистрация',
-                                                      'userName'=>$userName,
-                                                    'userAvatar'=>$userAvatar,
-                                                  'categories'=>$categories,
-                                                'isAuth'=>$isAuth]);
+                                                  'categories'=>$categories]);
 print ($layoutContent);
 ?>
