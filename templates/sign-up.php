@@ -18,7 +18,7 @@
         $errorMsg= isset($errors[$field]) ? $errors[$field] : '';?>
     <div class="form__item <?=$classname?>"> <!-- form__item--invalid -->
       <label for="email">E-mail*</label>
-      <input id="email" type="text" name="email" placeholder="Введите e-mail" value="<?=$value?>" >
+      <input id="email" type="text" name="email" placeholder="Введите e-mail" value="<?=htmlspecialchars($value)?>" >
       <span class="form__error"><?=$errorMsg?></span>
     </div>
 
@@ -28,7 +28,7 @@
         $errorMsg= isset($errors[$field]) ? $errors[$field] : '';?>
     <div class="form__item <?=$classname?>">
       <label for="password">Пароль*</label>
-      <input id="password" type="text" name="password" placeholder="Введите пароль" value="<?=$value?>">
+      <input id="password" type="text" name="password" placeholder="Введите пароль" value="<?=htmlspecialchars($value)?>">
       <span class="form__error"><?=$errorMsg?></span>
     </div>
 
@@ -38,7 +38,7 @@
         $errorMsg= isset($errors[$field]) ? $errors[$field] : '';?>
     <div class="form__item <?=$classname?>">
       <label for="name">Имя*</label>
-      <input id="name" type="text" name="name" placeholder="Введите имя" value="<?=$value?>">
+      <input id="name" type="text" name="name" placeholder="Введите имя" value="<?=htmlspecialchars($value)?>">
       <span class="form__error"><?=$errorMsg?></span>
     </div>
 
@@ -48,7 +48,7 @@
         $errorMsg= isset($errors[$field]) ? $errors[$field] : '';?>
     <div class="form__item <?=$classname?>">
       <label for="message">Контактные данные*</label>
-      <textarea id="message" name="message" placeholder="Напишите как с вами связаться" ><?=$value?></textarea>
+      <textarea id="message" name="message" placeholder="Напишите как с вами связаться" ><?=htmlspecialchars($value)?></textarea>
       <span class="form__error"><?=$errorMsg?></span>
     </div>
 
@@ -61,7 +61,7 @@
       <div class="preview">
         <button class="preview__remove" type="button">x</button>
         <div class="preview__img">
-          <img src="<?=$value;?>" width="113" height="113" alt="Ваш аватар">
+          <img src="" width="113" height="113" alt="Ваш аватар">
         </div>
       </div>
       <div class="form__input-file">

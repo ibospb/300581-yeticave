@@ -1,7 +1,6 @@
 <?php
 require_once ('db_connect.php');
 require_once ('functions.php');
-require_once ('data.php');
 
 session_start();
 
@@ -15,16 +14,8 @@ if (isset($_SESSION['user'])) {
   $isAuth=true;
 }
 
-$sql= 'SELECT * FROM category';
-$result = mysqli_query($con,$sql);
-if (!$result) {
-  $error=mysqli_error($con);
-  print('Ошибка БД: '. $error);
-  exit();
-}
-else {
-  $categories=mysqli_fetch_all($result, MYSQLI_ASSOC);
-}
+// получаем список категорий
+$categories=getCategoryList($con);
 
 // валидацция формы
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -73,8 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 // валидация изображения
 if (isset($_FILES['avatar']['name']) && file_exists($_FILES['avatar']['tmp_name']) && is_uploaded_file($_FILES['avatar']['tmp_name']) ) {
   $tmp_name = $_FILES['avatar']['tmp_name'];
-  $finfo = finfo_open(FILEINFO_MIME_TYPE);
-  $file_type = finfo_file($finfo, $tmp_name);
+  $file_type=mime_content_type($tmp_name);
   if (!($file_type == 'image/jpeg' || $file_type == 'image/png')) {
     $errors['path'] = 'Загрузите картинку в формате JPG или PNG';
   }

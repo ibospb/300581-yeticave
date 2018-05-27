@@ -1,8 +1,8 @@
 <?
+// установка временной зоны
+date_default_timezone_set('Europe/Moscow');
 
-
-// пользовательские функции
-
+// функция фоматирования цены
 function formatPrice ($price) {
   if ($price>=1000) {
     $price= number_format((ceil($price)),0,'.',' ');
@@ -76,13 +76,46 @@ elseif ($minutes<=60) {
   $timer= $minutes.' минут назад';
 }
 else {
-  $timer= date('d.m.Y \в H:m', strtotime($dt_add)) ;
+  $timer= date('d.m.Y \\в H:m', strtotime($dt_add)) ;
 }
 
-
-
-  return $timer;
+return $timer;
 }
+
+// Запрос списка ставок по Id лота
+function getBetList ($con, $id) {
+  $sql =
+      'SELECT user.user_id, user.name, bet, bet.dt_add  FROM bet
+      INNER JOIN user USING(user_id)
+      WHERE lot_id=?
+      ORDER BY bet.dt_add DESC';
+  $res = mysqli_prepare($con, $sql);
+  $stmt = db_get_prepare_stmt($con, $sql, [$id]);
+  mysqli_stmt_execute($stmt);
+  $result = mysqli_stmt_get_result($stmt);
+if (!$result) {
+  $error=mysqli_error($con);
+  print('Ошибка БД: '. $error);
+  exit();
+}
+$bets = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+return $bets;
+}
+
+// запрос списка категорий
+function getCategoryList($con) {
+  $sql= 'SELECT * FROM category';
+  $result = mysqli_query($con,$sql);
+  if (!$result) {
+    $error=mysqli_error($con);
+    print('Ошибка БД: '. $error);
+    exit();
+  }
+  $categories=mysqli_fetch_all($result, MYSQLI_ASSOC);
+return $categories;
+}
+
 /**
  * Создает подготовленное выражение на основе готового SQL запроса и переданных данных
  *

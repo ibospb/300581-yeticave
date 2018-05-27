@@ -1,18 +1,20 @@
 <?php
 require_once ('db_connect.php');
 require_once ('functions.php');
-require_once ('data.php');
 
 session_start();
 
 $userName='';
 $isAuth=false;
 $userAvatar='';
+$userId='';
+
 
 if (isset($_SESSION['user'])) {
   $userName= $_SESSION['user']['name'];
   $isAuth=true;
   $userAvatar=$_SESSION['user']['avatar_path'];
+  $userId= $_SESSION['user']['user_id'];
 }
 
 // проверка отправки GET
@@ -36,8 +38,6 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
 
   $titlePage=$lot['name'];
 
-
-
 }
 else {
   header("HTTP/1.1 404 Forbidden");
@@ -46,44 +46,24 @@ else {
 }
 
 // получаем ставки по id //
-$sql =
-    'SELECT user.user_id, user.name, bet, bet.dt_add  FROM bet
-    INNER JOIN user USING(user_id)
-    WHERE lot_id=?
-    ORDER BY bet.dt_add DESC';
-$res = mysqli_prepare($con, $sql);
-$stmt = db_get_prepare_stmt($con, $sql, [$id]);
-mysqli_stmt_execute($stmt);
-$result = mysqli_stmt_get_result($stmt);
-if (!$result) {
-  $error=mysqli_error($con);
-  print('Ошибка БД: '. $error);
-  exit();
-}
-$bets = mysqli_fetch_all($result, MYSQLI_ASSOC);
+$bets=getBetList($con, $id);
 
 // получаем список категорий
-$sql= 'SELECT * FROM category';
-$result = mysqli_query($con,$sql);
-if (!$result) {
-  $error=mysqli_error($con);
-  print('Ошибка БД: '. $error);
-  exit();
-}
-$categories=mysqli_fetch_all($result, MYSQLI_ASSOC);
+$categories=getCategoryList($con);
 
 // проверяем возможность делать ставки для данного посетителя
-
-$userId= $_SESSION['user']['user_id'];
 // ищем совпадения в таблице ставок
-$rule1=in_array($userId, array_column($bets, 'user_id'));
- // ищем совпадения в таблице ставок
+$rule1=false;
+if (isset($bets[0]['user_id'])) {
+  $rule1=$userId!==$bets[0]['user_id'];
+}
+ // ищем совпадения в таблице ставок по id пользователя
 $rule2=($lot['user_id']!==$userId);
  // проверяем не истек ли срок лота
 $rule3=strtotime($lot['dt_close'])>time();
 
 $resolveBet=false;
-if ($isAuth && !$rule1 && $rule2 && $rule3) {
+if ($isAuth && $rule1 && $rule2 && $rule3) {
    $resolveBet=true;
  }
 
@@ -94,7 +74,7 @@ if ($lot['total_price'] > $lot['start_price']) {
 }
 
 // получаем данные из формы
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && $resolveBet) {
 	$userBet = $_POST['cost'];
   $errors=[];
 
@@ -121,10 +101,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt = db_get_prepare_stmt($con, $sql, [$userBet, $lot['lot_id'], $userId]);
     $res = mysqli_stmt_execute($stmt);
     $resolveBet=false;
-    if (!$res) {
+    if ($res) {
+      $resolveBet=false;
+      $bets=getBetList($con, $id);
+    }
+    else {
       $error=mysqli_error($con);
       print('Ошибка БД: '. $error);
       exit();
+
     }
   }
 }

@@ -19,7 +19,7 @@
           $errorMsg= isset($errors[$field]) ? $errors[$field] : '';?>
       <div class="form__item <?=$classname?>"> <!-- form__item--invalid -->
         <label for="lot-name">Наименование</label>
-        <input id="lot-name" type="text" name="lot[name]" placeholder="Введите наименование лота" value=<?=$value;?>>
+        <input id="lot-name" type="text" name="lot[name]" placeholder="Введите наименование лота" value=<?=htmlspecialchars($value);?>>
         <span class="form__error"><?=$errorMsg?></span>
       </div>
 
@@ -46,7 +46,7 @@
     $errorMsg= isset($errors[$field]) ? $errors[$field] : '';?>
     <div class="form__item form__item--wide <?=$classname;?>">
       <label for="message">Описание</label>
-      <textarea id="message" name="lot[message]" placeholder="Напишите описание лота"><?=$value;?></textarea>
+      <textarea id="message" name="lot[message]" placeholder="Напишите описание лота"><?=htmlspecialchars($value);?></textarea>
       <span class="form__error"><?=$errorMsg?></span>
     </div>
 
@@ -60,7 +60,7 @@
       <div class="preview">
         <button class="preview__remove" type="button">x</button>
         <div class="preview__img">
-          <img src="<?=$value;?>" width="113" height="113" alt="Изображение лота">
+          <img src="" width="113" height="113" alt="Изображение лота">
         </div>
       </div>
       <div class="form__input-file">
@@ -79,7 +79,7 @@
       $errorMsg= isset($errors[$field]) ? $errors[$field] : '';?>
       <div class="form__item form__item--small <?=$classname;?>">
         <label for="lot-rate">Начальная цена</label>
-        <input id="lot-rate" type="number" name="lot[rate]" placeholder="0" value=<?=$value;?>>
+        <input id="lot-rate" type="number" name="lot[rate]" placeholder="0" value=<?=htmlspecialchars($value);?>>
         <span class="form__error"><?=$errorMsg?></span>
       </div>
 
@@ -89,7 +89,7 @@
       $errorMsg= isset($errors[$field]) ? $errors[$field] : '';?>
       <div class="form__item form__item--small <?=$classname;?>">
         <label for="lot-step">Шаг ставки</label>
-        <input id="lot-step" type="number" name="lot[step]" placeholder="0" value=<?=$value;?>>
+        <input id="lot-step" type="number" name="lot[step]" placeholder="0" value=<?=htmlspecialchars($value);?>>
         <span class="form__error"><?=$errorMsg?></span>
       </div>
 
@@ -99,7 +99,7 @@
       $errorMsg= isset($errors[$field]) ? $errors[$field] : '';?>
       <div class="form__item <?=$classname;?>">
         <label for="lot-date">Дата окончания торгов</label>
-        <input class="form__input-date" id="lot-date" type="date" name="lot[date]" value=<?=$value;?>>
+        <input class="form__input-date" id="lot-date" type="date" name="lot[date]" value=<?=htmlspecialchars($value);?>>
         <span class="form__error"><?=$errorMsg?></span>
       </div>
     </div>

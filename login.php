@@ -1,7 +1,6 @@
 <?php
 require_once ('db_connect.php');
 require_once ('functions.php');
-require_once ('data.php');
 
 session_start();
 
@@ -16,17 +15,9 @@ else {
   $isAuth=false;
 }
 
-$sql= 'SELECT * FROM category';
-$result = mysqli_query($con,$sql);
-if (!$result) {
-  $error=mysqli_error($con);
-  print('Ошибка БД: '. $error);
-  exit();
-}
-else {
-  $categories=mysqli_fetch_all($result, MYSQLI_ASSOC);
+// получаем список категорий
+$categories=getCategoryList($con);
 
-}
 // валидацция формы
 if (($_SERVER['REQUEST_METHOD'] == 'POST') && isset($_POST)) {
 	$data = $_POST;

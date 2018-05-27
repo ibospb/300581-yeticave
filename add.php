@@ -1,8 +1,6 @@
 <?php
 require_once ('db_connect.php');
 require_once ('functions.php');
-require_once ('data.php');
-
 
 session_start();
 $userName='';
@@ -23,17 +21,9 @@ if (!isset($_SESSION['user'])) {
  exit();
 }
 
-$sql= 'SELECT * FROM category';
-$result = mysqli_query($con,$sql);
-if (!$result) {
-  $error=mysqli_error($con);
-  print('Ошибка БД: '. $error);
-  exit();
-}
-else {
-  $categories=mysqli_fetch_all($result, MYSQLI_ASSOC);
+// получаем список категорий
+$categories=getCategoryList($con);
 
-}
 // валидацция формы
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['lot'])) {
 	$lot = $_POST['lot'];
@@ -45,8 +35,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['lot'])) {
     $errors['name'] = 'Это поле надо заполнить';
   }
 
-
-  if (empty($lot['category']) || !isset($categories[$lot['category']]['category_id'])) {
+  $userCategory=$lot['category'];
+  if (empty($userCategory) || in_array($userCategory, array_column($categories, 'category_id'))) {
     $errors['category'] = 'Это поле надо заполнить';
   }
 
@@ -80,8 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['lot'])) {
 // валидация изображения
   if (isset($_FILES['lot_img']['name']) && file_exists($_FILES['lot_img']['tmp_name']) && is_uploaded_file($_FILES['lot_img']['tmp_name'])) {
     $tmp_name = $_FILES['lot_img']['tmp_name'];
-    $finfo = finfo_open(FILEINFO_MIME_TYPE);
-    $file_type = finfo_file($finfo, $tmp_name);
+    $file_type=mime_content_type($tmp_name);
     if (!($file_type == 'image/jpeg' || $file_type == 'image/png')) {
       $errors['path'] = 'Загрузите картинку в формате JPG или PNG';
     }
@@ -138,5 +127,6 @@ $layoutContent = renderTemplate('templates/layout.php', [ 'content'=> $content,
                                                           'userName'=>$userName,
                                                           'userAvatar'=>$userAvatar,
                                                           'isAuth'=>$isAuth]);
+
 print ($layoutContent);
 ?>
