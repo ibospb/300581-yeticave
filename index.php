@@ -5,6 +5,17 @@ require_once ('data.php');
 
 session_start();
 
+$userName='';
+$isAuth=false;
+$userAvatar='';
+
+if (isset($_SESSION['user'])) {
+  $userName= $_SESSION['user']['name'];
+  $isAuth=true;
+  $userAvatar=$_SESSION['user']['avatar_path'];
+}
+
+
 /* Работа с БД */
 $sql= 'SELECT * FROM category';
 $result = mysqli_query($con,$sql);
@@ -37,13 +48,16 @@ else {
 $lotsList=mysqli_fetch_all($result, MYSQLI_ASSOC);
 }
 
-$content = renderTemplate('templates/index.php', ['categories' => $categories,
+$content = renderTemplate('templates/index.php', [  'categories' => $categories,
                                                     'lotsList' => $lotsList]
                                                   );
 
-$layoutContent = renderTemplate('templates/layout.php', ['content'=> $content,
+$layoutContent = renderTemplate('templates/layout.php', [ 'content'=> $content,
                                                           'titlePage'=>'Главная',
-                                                    'categories'=>$categories]);
+                                                          'categories'=>$categories,
+                                                          'userName'=>$userName,
+                                                          'userAvatar'=>$userAvatar,
+                                                          'isAuth'=>$isAuth]);
 print ($layoutContent);
 
 

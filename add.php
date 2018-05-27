@@ -3,9 +3,23 @@ require_once ('db_connect.php');
 require_once ('functions.php');
 require_once ('data.php');
 
+
 session_start();
+$userName='';
+$userAvatar='';
+$isAuth=false;
+
+if (isset($_SESSION['user'])) {
+  $userName= $_SESSION['user']['name'];
+  $userAvatar=$_SESSION['user']['avatar_path'];
+  $isAuth=true;
+  $userId= $_SESSION['user']['user_id'];
+}
+
+
 if (!isset($_SESSION['user'])) {
- header("Location: /");
+ header("HTTP/1.1 403 Forbidden");
+ header("Location: login.php");
  exit();
 }
 
@@ -98,8 +112,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['lot'])) {
     // запись в БД
     $sql = 'INSERT INTO lot (dt_add, user_id, name, specification,
                         start_price, step_price, category_id, dt_close, pic_path)
-            VALUES (NOW(), 1, ?, ?, ?, ?, ?, ?, ?)';
-    $stmt = db_get_prepare_stmt($con, $sql, [$lot['name'], $lot['message'], $lot['rate'],$lot['step'],$lot['category'],$lot['date'],$lot['path']]);
+            VALUES (NOW(), ?, ?, ?, ?, ?, ?, ?, ?)';
+    $stmt = db_get_prepare_stmt($con, $sql, [$userId, $lot['name'], $lot['message'], $lot['rate'],$lot['step'],$lot['category'],$lot['date'],$lot['path']]);
     $res = mysqli_stmt_execute($stmt);
     if ($res) {
         $lot_id = mysqli_insert_id($con);
@@ -118,8 +132,11 @@ else {
   $content = renderTemplate('templates/add.php', ['categories'=>$categories]);
 
 }
-$layoutContent = renderTemplate('templates/layout.php', ['content'=> $content,
-                                                        'titlePage'=>'Добавление лота',
-                                                  'categories'=>$categories]);
+$layoutContent = renderTemplate('templates/layout.php', [ 'content'=> $content,
+                                                          'titlePage'=>'Добавление лота',
+                                                          'categories'=>$categories,
+                                                          'userName'=>$userName,
+                                                          'userAvatar'=>$userAvatar,
+                                                          'isAuth'=>$isAuth]);
 print ($layoutContent);
 ?>

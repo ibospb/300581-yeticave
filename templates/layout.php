@@ -23,12 +23,12 @@
         <nav class="user-menu">
 
           <!-- PHP код для показа аватара пользователя -->
-          <? if (isset($_SESSION['user'])):?>
+          <? if ($isAuth):?>
               <div class="user-menu__image">
-                <img src="<?=isset($_SESSION['user']['avatar_path'])?$_SESSION['user']['avatar_path']:'img/user.jpg' ?>" width="40" height="40" alt="Пользователь">
+                <img src="<?=isset($userAvatar)?$userAvatar:'img/user.jpg'?>" width="40" height="40" alt="Пользователь">
               </div>
               <div class="user-menu__logged">
-                <p><?=htmlspecialchars($_SESSION['user']['name']);?></p>
+                <p><?=htmlspecialchars($userName);?></p>
                 <a href="logout.php">Выйти</a>
               </div>
 
@@ -38,7 +38,7 @@
                <a href="singn-up.php">Регистрация</a>
              </li>
              <li class="user-menu__item">
-               <a href="login.php ?>">Вход</a>
+               <a href="login.php">Вход</a>
              </li>
            </ul>
           <?endif;?>

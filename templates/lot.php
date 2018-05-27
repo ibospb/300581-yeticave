@@ -21,7 +21,7 @@
       </div>
       <div class="lot-item__right">
 
-        <? if (isset($_SESSION['user'])):?>
+        <? if ($resolveBet):?>
         <div class="lot-item__state">
           <div class="lot-item__timer timer">
             <?=timerLot($lot['dt_close'])?>
@@ -35,10 +35,17 @@
               Мин. ставка <span><?=formatPrice($lot['min_bet'])?></span>
             </div>
           </div>
-          <form class="lot-item__form" action="https://echo.htmlacademy.ru" method="post">
+
+          <?  $field='cost';
+              $value=isset($lot[$field])?$lot[$field]:'';
+              $classname= isset($errors[$field]) ? 'form__item--invalid' : '';
+              $errorMsg= isset($errors[$field]) ? $errors[$field] : '';?>
+
+          <form class="lot-item__form <?=$classname?>" action="" method="post">
             <p class="lot-item__form-item">
               <label for="cost">Ваша ставка</label>
-              <input id="cost" type="number" name="cost" placeholder="<?=$lot['min_bet']?>">
+              <input id="cost" type="number" name="cost" placeholder="<?=$lot['min_bet'] ?>" value="<?=$value;?>">
+              <span class="form__error"><?=$errorMsg?></span>
             </p>
             <button type="submit" class="button">Сделать ставку</button>
           </form>

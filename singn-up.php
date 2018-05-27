@@ -5,6 +5,16 @@ require_once ('data.php');
 
 session_start();
 
+$userName='';
+$userAvatar='';
+$isAuth=false;
+
+if (isset($_SESSION['user'])) {
+  $userName= $_SESSION['user']['name'];
+  $userAvatar=$_SESSION['user']['avatar_path'];
+  $isAuth=true;
+}
+
 $sql= 'SELECT * FROM category';
 $result = mysqli_query($con,$sql);
 if (!$result) {
@@ -17,7 +27,7 @@ else {
 }
 
 // валидацция формы
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST)) {
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	$data = $_POST;
 
 // валидация полученных данных
@@ -83,8 +93,8 @@ if (isset($_FILES['avatar']['name']) && file_exists($_FILES['avatar']['tmp_name'
 
 	if (count($errors)) {
 		$content = renderTemplate('templates/sign-up.php', ['data' => $data,
-                                                    'errors' => $errors,
-                                                    'categories'=>$categories]);
+                                                        'errors' => $errors,
+                                                        'categories'=>$categories]);
   }
 
   else {
@@ -117,8 +127,11 @@ else {
 $content = renderTemplate('templates/sign-up.php', ['categories'=>$categories]);
 
 }
-$layoutContent = renderTemplate('templates/layout.php', ['content'=> $content,
-                                                        'titlePage'=>'Регистрация',
-                                                  'categories'=>$categories]);
+$layoutContent = renderTemplate('templates/layout.php', [ 'content'=> $content,
+                                                          'titlePage'=>'Регистрация',
+                                                          'categories'=>$categories,
+                                                          'userName'=>$userName,
+                                                          'userAvatar'=>$userAvatar,
+                                                          'isAuth'=>$isAuth]);
 print ($layoutContent);
 ?>

@@ -5,6 +5,17 @@ require_once ('data.php');
 
 session_start();
 
+if (isset($_SESSION['user'])) {
+  $userName= $_SESSION['user']['name'];
+  $userAvatar=$_SESSION['user']['avatar_path'];
+  $isAuth=true;
+}
+else {
+  $userName='';
+  $userAvatar='';
+  $isAuth=false;
+}
+
 $sql= 'SELECT * FROM category';
 $result = mysqli_query($con,$sql);
 if (!$result) {
@@ -76,9 +87,12 @@ else {
     $content = renderTemplate('templates/login.php', ['categories'=>$categories]);
   }
 }
-$layoutContent = renderTemplate('templates/layout.php', ['content'=> $content,
-                                                        'titlePage'=>'Вход',
-                                                  'categories'=>$categories]);
+$layoutContent = renderTemplate('templates/layout.php', [ 'content'=> $content,
+                                                          'titlePage'=>'Вход',
+                                                          'categories'=>$categories,
+                                                          'userName'=>$userName,
+                                                          'userAvatar'=>$userAvatar,
+                                                          'isAuth'=>$isAuth]);
 print ($layoutContent);
 
 
