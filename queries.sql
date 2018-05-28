@@ -15,8 +15,8 @@ VALUES  ('Игнат','ignat.v@gmail.com','2018-03-28','$2y$10$OqvsKHQwr0Wk6FMZD
 
 INSERT INTO lot (name, specification, start_price, step_price, category_id, user_id, user_win, dt_close, dt_add, pic_path)
 VALUES  ('2014 Rossignol District Snowboard', 'Все самое лучшее',  10999,   500,  1,1,DEFAULT,   '2018-06-11','2018-05-09','img/lot-1.jpg'),
-        ('DC Ply Mens 2016/2017 Snowboard',   'Б\У чутка пахнет',  159999,  1000, 1,2,DEFAULT,'2018-06-3','2018-05-02','img/lot-2.jpg'),
-        ('Крепления Union Contact Pro 2015 года размер L/XL','ух', 8000,    300,  2,1,DEFAULT,   '2018-05-25','2018-04-29','img/lot-3.jpg'),
+        ('DC Ply Mens 2016/2017 Snowboard',   'Б\У чутка пахнет',  159999,  1000, 1,2,DEFAULT,'2018-06-03','2018-05-02','img/lot-2.jpg'),
+        ('Крепления Union Contact Pro 2015 года размер L/XL','ух', 8000,    300,  2,1,DEFAULT,   '2018-06-30','2018-04-29','img/lot-3.jpg'),
         ('Ботинки для сноуборда DC Mutiny Charocal','надо брать',  10999,   100,  3,2,DEFAULT,'2018-06-15','2018-05-05','img/lot-4.jpg'),
         ('Куртка для сноуборда DC Mutiny Charocal','хороший слон', 7500,    50,   4,2,DEFAULT,   '2018-06-05','2018-05-03','img/lot-5.jpg'),
         ('Маска Oakley Canopy','Есть кондиционер и бинты',         5400,    150,  6,3,DEFAULT,   '2018-06-09','2018-05-07','img/lot-6.jpg');

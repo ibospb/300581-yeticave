@@ -83,7 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['lot'])) {
 // в переменной $data['filename'] сохраняеться название загруженного изображения, до тех пор пока есть ошибки
   elseif (isset($lot['load_img']) && file_exists('img/'.$lot['load_img']) && areYouImage('img/'.$lot['load_img'])){
     $lot['filename']=$lot['load_img'];
-    $lot['path']='img/'.$data['filename'];
+    $lot['path']='img/'.$lot['filename'];
   }
   else {
     $errors['filename'] = 'Вы не загрузили файл';
