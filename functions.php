@@ -1,11 +1,20 @@
 <?
-// установка временной зоны
+/**
+ * Установка Московской временной зоны
+ */
 date_default_timezone_set('Europe/Moscow');
 
 
-// файл графика или нет (true/false)('image/png' или 'image/png') входные данные: сылка на файл $path
-//  '.png' или '.jpg' или false, если указан второй аргумент
 
+/**
+* Проверяет тип файла 'image/jpeg','image/png'
+*
+*@param $path string Путь к файлу
+*@param $value Любое значение
+*
+*@return $result boolean
+*@return $result string '.jpg' или '.png'
+*/
 function  areYouImage ($path, $value='') {
   $result=false;
   $file_type=mime_content_type($path);
@@ -22,7 +31,13 @@ function  areYouImage ($path, $value='') {
 return $result;
 }
 
-// функция фоматирования цены
+/**
+* Форматирует цену
+*
+*@param $price integer цена
+*
+*@return $price отформатированное значение
+*/
 function formatPrice ($price) {
   if ($price>=1000) {
     $price= number_format((ceil($price)),0,'.',' ');
@@ -30,11 +45,18 @@ function formatPrice ($price) {
   else {
     $price= ceil($price);
   }
+
 return $price;
 }
 
-// функция- шаблонизатор
-
+/**
+* функция- шаблонизатор
+*
+*@param $path string Путь к шаблону
+*@param $data array Массив данных для шаблона
+*
+*@return $outContent Готовый html
+*/
 function renderTemplate ($path, $data) {
   $outContent='';
   if (file_exists($path)) {
@@ -44,11 +66,16 @@ function renderTemplate ($path, $data) {
     $outContent= ob_get_clean();
   }
 
-  return $outContent;
+return $outContent;
 }
 
-/* функция склоняет слово "ставка" в зависимости от количества ставок
-если ставок нет (кол-во ставок равно 0), то выводит "Стартовая цена" */
+/**
+* Функция для числительных
+*
+*@param $countBet integer количество ставок
+*
+*@return $out string сформированая строка
+*/
 function totalBet($countBet) {
 $out='Стартовая цена';
 if ($countBet%10>=2 && $countBet%10<=4 && ($countBet%100<10 or $countBet%100>=20)) {
@@ -58,51 +85,73 @@ if ($countBet%10>=2 && $countBet%10<=4 && ($countBet%100<10 or $countBet%100>=20
   } elseif ($countBet!=0){
     $out=$countBet.' ставок';
   }
-  return $out; //1 ка 2,3,4 ки 5,6,7,8,9,..20 ставок 21 ка 22..24 ки 25..30 ок
+
+return $out;
 }
 
+/**
+* Функция таймера лота
+*
+*@param $closingTime string Дата закрытие лота
+*
+*@return $timer string сформированная строка (Время до завершения)
+*/
 function timerLot ($closingTime) {
   $now=time();
   $second= strtotime($closingTime)-$now;
   $hours= floor($second/3600);
   $minutes= floor(($second%3600)/60);
   $days= floor($second/86400);
-
   if ($second<=0) {
     $timer='время закончилось';
-
-  } elseif ( $days<=1) {
+  }
+  elseif ( $days<=1) {
     $timer= $hours.' ч '.$minutes.' мин ';
-  } elseif ($days<=7 && $days>1) {
+  }
+  elseif ($days<=7 && $days>1) {
     $timer= $days.' дня';
-  } else {
+  }
+  else {
     $timer= date('d:m:Y', strtotime($closingTime));
   }
 
-  return $timer;
+return $timer;
 }
 
-// время ставки в человеческом формате (5 минут назад, час назад и т.д.).
+/**
+* время ставки в человеческом формате(5 минут назад, час назад)
+*
+*@param $dt_add string Дата добавления ставки
+*
+*@return $timer string  сформированая строка
+*/
 function timerBet ($dt_add) {
   $now=time();
   $second= $now-strtotime($dt_add);
   $minutes= floor($second/60);
   $hours= floor($second/3600);
 
-if ($minutes<1440 && $minutes>60) {
-  $timer= $hours.' часа назад';
-}
-elseif ($minutes<=60) {
-  $timer= $minutes.' минут назад';
-}
-else {
+  if ($minutes<1440 && $minutes>60) {
+    $timer= $hours.' часа назад';
+  }
+  elseif ($minutes<=60) {
+    $timer= $minutes.' минут назад';
+  }
+  else {
   $timer= date('d.m.Y \\в H:m', strtotime($dt_add)) ;
-}
+  }
 
 return $timer;
 }
 
-// Запрос списка ставок по Id лота
+/**
+* Функция получения массива ставок по id лота
+*
+*@param $con mysqli функция подключения
+*@param $id integer ID лота
+*
+*@return $bets array массив с данными ставок
+*/
 function getBetList ($con, $id) {
   $sql =
       'SELECT user.user_id, user.name, bet, bet.dt_add  FROM bet
@@ -123,7 +172,14 @@ $bets = mysqli_fetch_all($result, MYSQLI_ASSOC);
 return $bets;
 }
 
-// запрос информации о лоте по его id
+/**
+* Получение информации о лоте по его ID
+*
+*@param $con mysqli функция подключения
+*@param $id integer ID лота
+*
+*@return $lot array Массив с данными о лоте
+*/
 function getLot ($con, $id) {
   $sql =
       'SELECT lot_id, name, ru_name, pic_path, specification, start_price,
@@ -143,12 +199,18 @@ function getLot ($con, $id) {
     print('Ошибка БД: '. $error);
     exit();
   }
-$lot = mysqli_fetch_assoc($result);
+  $lot = mysqli_fetch_assoc($result);
 
 return $lot;
 }
 
-// запрос списка категорий
+/**
+* Получение всех данных из таблицы категорий
+*
+*@param $con mysqli функция подключения
+*
+*@return $categories array Массив с данными категорий
+*/
 function getCategoryList($con) {
   $sql= 'SELECT * FROM category';
   $result = mysqli_query($con,$sql);
