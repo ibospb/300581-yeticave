@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['lot'])) {
   }
 
   $userCategory=$lot['category'];
-  if (empty($userCategory) || in_array($userCategory, array_column($categories, 'category_id'))) {
+  if (empty($userCategory) || !in_array($userCategory, array_column($categories, 'category_id'))) {
     $errors['category'] = 'Это поле надо заполнить';
   }
 
@@ -70,25 +70,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['lot'])) {
 // валидация изображения
   if (isset($_FILES['lot_img']['name']) && file_exists($_FILES['lot_img']['tmp_name']) && is_uploaded_file($_FILES['lot_img']['tmp_name'])) {
     $tmp_name = $_FILES['lot_img']['tmp_name'];
-    $file_type=mime_content_type($tmp_name);
-    if (!($file_type == 'image/jpeg' || $file_type == 'image/png')) {
-      $errors['path'] = 'Загрузите картинку в формате JPG или PNG';
+    if (!areYouImage($tmp_name)) {
+      $errors['filename'] = 'Загрузите картинку в формате JPG или PNG';
     }
     else {
-      if ($file_type == 'image/png') {
-        $fileExtension= '.png';
-      }
-      else {
-        $fileExtension= '.jpg';
-      }
-      $filename = uniqid().$fileExtension;
-      $lot['path'] = 'img/'.$filename;
+      $fileExtension=areYouImage($tmp_name,1);
+      $lot['filename'] = uniqid().$fileExtension;
+      $lot['path'] = 'img/'.$lot['filename'];
       move_uploaded_file($_FILES['lot_img']['tmp_name'], $lot['path']);
     }
   }
-
+// в переменной $data['filename'] сохраняеться название загруженного изображения, до тех пор пока есть ошибки
+  elseif (isset($lot['load_img']) && file_exists('img/'.$lot['load_img']) && areYouImage('img/'.$lot['load_img'])){
+    $lot['filename']=$lot['load_img'];
+    $lot['path']='img/'.$data['filename'];
+  }
   else {
-    $errors['path'] = 'Вы не загрузили файл';
+    $errors['filename'] = 'Вы не загрузили файл';
   }
 	if (count($errors)) {
 		$content = renderTemplate('templates/add.php', ['lot' => $lot,
@@ -97,7 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['lot'])) {
 
   }
 	else {
-
+    $lot['path']='img/'.$lot['filename'];
     // запись в БД
     $sql = 'INSERT INTO lot (dt_add, user_id, name, specification,
                         start_price, step_price, category_id, dt_close, pic_path)

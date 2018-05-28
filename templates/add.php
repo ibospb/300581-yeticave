@@ -50,21 +50,22 @@
       <span class="form__error"><?=$errorMsg?></span>
     </div>
 
-    <?  $field='path';
+    <?  $field='filename';
         $classname= isset($lot[$field]) ? 'form__item--uploaded' : 'form__item--invalid';
         $value= isset($lot[$field]) ? $lot[$field] : '';
-        $errorMsg=isset($errors[$field]) ? $errors[$field] : '';?>
+        $errorMsg=isset($errors[$field]) ? $errors[$field] : '';
+        $fileUpload= isset($lot[$field])?'<input name="lot[load_img]" type="hidden" value="'.$value.'">':'<input class="visually-hidden" type="file" id="photo2" name="lot_img" value="">' ;?>
     <div class="form__item form__item--file <?=$classname;?>"> <!-- form__item--uploaded -->
       <label>Изображение</label>
 
       <div class="preview">
         <button class="preview__remove" type="button">x</button>
         <div class="preview__img">
-          <img src="" width="113" height="113" alt="Изображение лота">
+          <img src="img/<?=$value?>" width="113" height="113" alt="Изображение лота">
         </div>
       </div>
       <div class="form__input-file">
-        <input class="visually-hidden" type="file" id="photo2" name="lot_img" value="">
+        <?=$fileUpload;?>
         <span class="form__error"><?=$errorMsg?></span>
         <label for="photo2">
           <span>+ Добавить</span>

@@ -2,6 +2,26 @@
 // установка временной зоны
 date_default_timezone_set('Europe/Moscow');
 
+
+// файл графика или нет (true/false)('image/png' или 'image/png') входные данные: сылка на файл $path
+//  '.png' или '.jpg' или false, если указан второй аргумент
+
+function  areYouImage ($path, $value='') {
+  $result=false;
+  $file_type=mime_content_type($path);
+  if ($file_type == 'image/jpeg') {
+    $result= '.jpg';
+  }
+  if ($file_type == 'image/png') {
+    $result= '.png';
+  }
+  if (empty($value) && $result) {
+    $result= true;
+  }
+
+return $result;
+}
+
 // функция фоматирования цены
 function formatPrice ($price) {
   if ($price>=1000) {
@@ -101,6 +121,31 @@ if (!$result) {
 $bets = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
 return $bets;
+}
+
+// запрос информации о лоте по его id
+function getLot ($con, $id) {
+  $sql =
+      'SELECT lot_id, name, ru_name, pic_path, specification, start_price,
+      count(bet) AS count_bet, dt_close, step_price, lot.user_id,
+      GREATEST(COALESCE(MAX(bet),0), start_price) AS total_price
+      FROM lot
+      LEFT JOIN bet USING(lot_id)
+      LEFT JOIN category  USING(category_id)
+      WHERE lot.lot_id=?
+      GROUP BY lot.lot_id';
+  $res = mysqli_prepare($con, $sql);
+  $stmt = db_get_prepare_stmt($con, $sql, [$id]);
+  mysqli_stmt_execute($stmt);
+  $result = mysqli_stmt_get_result($stmt);
+  if (!$result) {
+    $error=mysqli_error($con);
+    print('Ошибка БД: '. $error);
+    exit();
+  }
+$lot = mysqli_fetch_assoc($result);
+
+return $lot;
 }
 
 // запрос списка категорий

@@ -62,27 +62,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   }
 
 // валидация изображения
-if (isset($_FILES['avatar']['name']) && file_exists($_FILES['avatar']['tmp_name']) && is_uploaded_file($_FILES['avatar']['tmp_name']) ) {
-  $tmp_name = $_FILES['avatar']['tmp_name'];
-  $file_type=mime_content_type($tmp_name);
-  if (!($file_type == 'image/jpeg' || $file_type == 'image/png')) {
-    $errors['path'] = 'Загрузите картинку в формате JPG или PNG';
-  }
-  else {
-    if ($file_type == 'image/png') {
-      $fileExtension= '.png';
+  if (isset($_FILES['avatar']['name']) && file_exists($_FILES['avatar']['tmp_name']) && is_uploaded_file($_FILES['avatar']['tmp_name']) ) {
+    $tmp_name = $_FILES['avatar']['tmp_name'];
+    if (!areYouImage($tmp_name)) {
+      $errors['filename'] = 'Загрузите картинку в формате JPG или PNG';
     }
     else {
-      $fileExtension= '.jpg';
+      $fileExtension=areYouImage($tmp_name,1);
+      $data['filename'] = uniqid().$fileExtension;
+      $data['path'] = 'img/'.$data['filename'];
+      move_uploaded_file($_FILES['avatar']['tmp_name'], $data['path']);
     }
-    $filename = uniqid().$fileExtension;
-    $data['path'] = 'img/'.$filename;
-    move_uploaded_file($_FILES['avatar']['tmp_name'], $data['path']);
   }
-}
+  // в переменной $data['filename'] сохраняеться название загруженного изображения, до тех пор пока есть ошибки
+  if (isset($data['load_img']) && file_exists('img/'.$data['load_img']) && areYouImage('img/'.$data['load_img'])){
+    $data['filename']=$data['load_img'];
+    $data['path']='img/'.$data['filename'];
+  }
 
-	if (count($errors)) {
-		$content = renderTemplate('templates/sign-up.php', ['data' => $data,
+  if (count($errors)) {
+  	$content = renderTemplate('templates/sign-up.php', ['data' => $data,
                                                         'errors' => $errors,
                                                         'categories'=>$categories]);
   }
